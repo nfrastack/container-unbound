@@ -174,12 +174,11 @@ Below is the complete list of available options that can be used to customize yo
 #### Forwarding Domain Configuration
 
 | Parameter                    | Description                                  | Default | Advanced |
-| ---------------------------- | -------------------------------------------- | ------- |
-| --------                     |
-| `FORWARD_DOMAIN_XX_NAME`     | Domain name to forward eg `example.com`      |         |
-| `FORWARD_DOMAIN_XX_IP`       | IP address to forward queries to for _NAME   |         |
-|                              | Add multiple by seperating with commas       |         |
-| `FORWARD_DOMAIN_XX_FALLBACK` | Try Root Servers first then try values above | `no`    |
+| ---------------------------- | -------------------------------------------- | ------- | -----    |
+| `FORWARD_DOMAIN_XX_NAME`     | Domain name to forward eg `example.com`      |         | |
+| `FORWARD_DOMAIN_XX_IP`       | IP address to forward queries to for _NAME   |         | |
+|                              | Add multiple by seperating with commas       |         | |
+| `FORWARD_DOMAIN_XX_FALLBACK` | Try Root Servers first then try values above | `no`    | |
 
 >> Exchange XX for 01,02,03 ....
 
