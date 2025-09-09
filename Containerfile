@@ -68,7 +68,7 @@ RUN echo "" && \
                             && \
     \
     source /container/base/functions/container/build && \
-    container_build_log && \
+    container_build_log image && \
     create_user unbound 5353 unbound 5353 /var/lib/unbound && \
     package update && \
     package upgrade && \
@@ -113,6 +113,7 @@ RUN echo "" && \
     sed -i -e '/^LIBS=/s/-lpython.*[[:space:]]/ /' Makefile && \
     make -j$(nproc)&& \
     make install && \
+    container_build_log add "Unbound" "${UNBOUND_VERSION}" "${UNBOUND_REPO_URL}" && \
     \
     mkdir -p \
         /container/data/unbound \
