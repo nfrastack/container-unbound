@@ -104,9 +104,9 @@ unbound_create_configuration() {
         truefalse_yesno STATISTICS_EXTENDED
 
 		cat <<EOF | silent sudo -u "${UNBOUND_USER}" tee "${CONFIG_PATH}"/"${CONFIG_FILE}"
-## Custom Generated Unbound Configuration! Do not edit, instead set ENV Vars
+## Custom Generated nfrastack container Unbound Configuration! Do not edit, instead set ENV Vars
 ## If you want to use your own configuration files set SETUP_TYPE=MANUAL when starting container
-## Last Generated on $(date)
+## Last Generated on $(TZ=${TIMEZONE} date +'%Y-%m-%d %H:%M:%S %Z')
 
 server:
     access-control: 0.0.0.0/0 allow

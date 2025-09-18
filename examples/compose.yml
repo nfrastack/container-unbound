@@ -9,7 +9,6 @@ services:
       - ./data:/data
       - ./logs:/logs
     environment:
-      - CONTAINER_NAME=unbound-app
       - TIMEZONE=America/Vancouver
     networks:
       - services

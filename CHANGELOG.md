@@ -1,21 +1,22 @@
-## 3.0.0 2025-08-15 <dave at tiredofit dot ca>
+## 3.0.1 2025-09-18 <code at nfrastack dot com>
+
+   ### Added
+      - Unbound 1.24.0
+
+   ### Changed
+      - Change some environment variables into build arguments
+      - Fetch runtime version differently
+      - Change THREADS_QUERIES_PER default to 2048 as per upstream 1.24.0 change
+      - Minor housekeeping with config generation
+
+
+## 3.0.0 2025-08-15 <code at nfrastack dot com>
 
    ### Added
       - Using base image nfrastack/container-base
       - Alpine 3.22
       - Compile with DNS Crypt, CacheDB (Redis) support
       - Additional environment variables for custom config loading
-
-
-## 3.0.0 2025-08-15 <dave at tiredofit dot ca>
-
-Using base image nfrastack/container-base
-Alpine 3.22
-Compile with DNS Crypt, CacheDB (Redis) support
-Additional environment variables for custom config loading
-
-   ### Added
-
 
 ## 2.7.99 2025-08-15 <dave at tiredofit dot ca>
 

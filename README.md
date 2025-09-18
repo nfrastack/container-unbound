@@ -166,7 +166,7 @@ Below is the complete list of available options that can be used to customize yo
 | `STATISTICS_EXTENDED`                 | Enable extended statistics          | `TRUE`                                                             |          |
 | `STATISTICS_INTERVAL`                 | Statistics interval                 | `0`                                                                |          |
 | `TARGET_FETCH_POLICY`                 | Target fetch policy                 | `2 1 0 0 0 0`                                                      | x        |
-| `THREADS_QUERIES_PER`                 | Queries per thread                  | `1024`                                                             | x        |
+| `THREADS_QUERIES_PER`                 | Queries per thread                  | `2048`                                                             | x        |
 | `THREADS`                             | Number of Unbound threads           | `1`                                                                | x        |
 | `TRUST_ANCHOR`                        | DNSSEC trust anchor                 | `. DS 19036 8 2`                                                   |          |
 |                                       |                                     | `49AAC11D7B6F6446702E54A1607371607A1A41855200FD2CE1CDDE32F24E8FB5` |          |

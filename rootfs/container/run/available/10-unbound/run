@@ -11,7 +11,7 @@ check_container_initialized
 check_service_initialized init
 liftoff
 
-print_start "Starting Unbound ${UNBOUND_VERSION/release-/}"
+print_start "Starting Unbound (unbound -V | head -n1 | awk '{print $2}')"
 exec unbound \
             -c "${CONFIG_PATH}"/"${CONFIG_FILE}" \
             -d ${UNBOUND_ADDITIONAL_ARGS}

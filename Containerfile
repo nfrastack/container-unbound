@@ -20,16 +20,15 @@ LABEL \
         org.opencontainers.image.licenses="MIT"
 
 ARG     \
-        UNBOUND_REPO_URL \
-        UNBOUND_VERSION
+        UNBOUND_VERSION="release-1.24.0" \
+        UNBOUND_REPO_URL="https://github.com/NLnetLabs/unbound"
+
 
 COPY CHANGELOG.md /usr/src/container/CHANGELOG.md
 COPY LICENSE /usr/src/container/LICENSE
 COPY README.md /usr/src/container/README.md
 
 ENV \
-    UNBOUND_VERSION=${UNBOUND_VERSION:-"release-1.23.1"} \
-    UNBOUND_REPO_URL=${UNBOUND_REPO_URL:-"https://github.com/NLnetLabs/unbound"} \
     CONTAINER_ENABLE_SCHEDULING=TRUE \
     IMAGE_NAME="nfrastack/unbound" \
     IMAGE_REPO_URL="https://github.com/nfrastack/container-unbound/"

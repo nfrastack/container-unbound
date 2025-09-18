@@ -25,5 +25,5 @@ set_env SO_BUFFER_SEND="" nfrastack/clamav
 set_env SO_REUSE_PORT="FALSE" nfrastack/clamav
 set_env TARGET_FETCH_POLICY="2 1 0 0 0 0" nfrastack/clamav
 set_env THREADS="1" nfrastack/clamav
-set_env THREADS_QUERIES_PER="1024" nfrastack/clamav
+set_env THREADS_QUERIES_PER="2048" nfrastack/clamav
 set_env UNBOUND_USER="unbound" nfrastack/clamav
