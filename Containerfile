@@ -2,10 +2,10 @@
 #
 # SPDX-License-Identifier: MIT
 
-ARG     \
-        BASE_IMAGE \
-        DISTRO \
-        DISTRO_VARIANT
+ARG \
+    BASE_IMAGE \
+    DISTRO \
+    DISTRO_VARIANT
 
 FROM ${BASE_IMAGE}:${DISTRO}_${DISTRO_VARIANT}
 

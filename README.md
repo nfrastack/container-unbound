@@ -31,7 +31,6 @@ This repository will build a container for [Unbound](https://www.unbound.net). A
   - [Networking](#networking)
 - [Maintenance](#maintenance)
   - [Shell Access](#shell-access)
-  - [Manual Definition Updates](#manual-definition-updates)
 - [Support & Maintenance](#support--maintenance)
 - [License](#license)
 
@@ -218,10 +217,6 @@ Below is the complete list of available options that can be used to customize yo
 ### Shell Access
 
 For debugging and maintenance, `bash` and `sh` are available in the container.
-
-### Manual Definition Updates
-
-Manual Definition Updates can be performed by entering the container and typing `update-now`
 
 ## Support & Maintenance
 
