@@ -5,7 +5,7 @@
 unbound_bootstrap_filesystem() {
     create_folder \
                 "${DATA_PATH},\
-                ${CONFIG_PATH}/,\
+                ${CONFIG_PATH},\
                 ${CUSTOM_CONFIG_PATH}" \
                 unbound:unbound 755
 }
@@ -220,15 +220,18 @@ unbound_configure_logging() {
 }
 
 unbound_configure_monitoring() {
-    if var_true "${CONTAINER_ENABLE_MONITORING}" && [ "${CONTAINER_MONITORING_BACKEND,,}" = "zabbix" ]; then
-        source /container/base/defaults/defaults/*-monitoring
-        cat <<EOF > "${ZABBIX_CONFIG_PATH}"/"${ZABBIX_CONFIG_FILE}.d"/nfrastack-unbound.conf
+    if var_true "${CONTAINER_ENABLE_MONITORING}" ; then
+        source /container/base/defaults/03-monitoring
+        case "${CONTAINER_MONITORING_BACKEND,,}" in
+            "zabbix" )
+                cat <<EOF | silent tee "${ZABBIX_CONFIG_PATH%/}"/"${ZABBIX_CONFIG_FILE}.d"/nfrastack_unbound.conf
 # Zabbix Unbound Configuration - Automatically Generated
-# Find Companion Zabbix Server Templates at https://github.com/nfrastack/container-unbound
 # Autoregister=unbound
 
 UserParameter=unbound.get_statistics,echo \$(date) ; sudo unbound-control -c "${CONFIG_PATH}"/"${CONFIG_FILE}" stats_noreset | sort
 UserParameter=unbound.version,unbound -V | head -n1 | awk '{print \$2}'
 EOF
+            ;;
+        esac
     fi
 }
