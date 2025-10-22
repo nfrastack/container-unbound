@@ -3,11 +3,9 @@
 # SPDX-License-Identifier: MIT
 
 ARG \
-    BASE_IMAGE \
-    DISTRO \
-    DISTRO_VARIANT
+    BASE_IMAGE
 
-FROM ${BASE_IMAGE}:${DISTRO}_${DISTRO_VARIANT}
+FROM ${BASE_IMAGE}
 
 LABEL \
         org.opencontainers.image.title="Unbound" \
@@ -20,7 +18,7 @@ LABEL \
         org.opencontainers.image.licenses="MIT"
 
 ARG     \
-        UNBOUND_VERSION="release-1.24.0" \
+        UNBOUND_VERSION="release-1.24.1" \
         UNBOUND_REPO_URL="https://github.com/NLnetLabs/unbound"
 
 
