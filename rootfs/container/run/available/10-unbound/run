@@ -13,5 +13,5 @@ liftoff
 
 print_start "Starting Unbound (unbound -V | head -n1 | awk '{print $2}')"
 exec unbound \
-            -c "${CONFIG_PATH}"/"${CONFIG_FILE}" \
+            -c "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
             -d ${UNBOUND_ADDITIONAL_ARGS}

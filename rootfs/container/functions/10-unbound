@@ -11,11 +11,11 @@ unbound_bootstrap_filesystem() {
 }
 
 unbound_configure_certificates() {
-    if [ ! -f "${TLS_SERVER_PATH}"/"${TLS_SERVER_CERT}" ] || [ ! -f "${TLS_SERVER_PATH}"/"${TLS_SERVER_KEY}" ] ; then
+    if [ ! -f "${TLS_SERVER_PATH%/}"/"${TLS_SERVER_CERT}" ] || [ ! -f "${TLS_SERVER_PATH%/}"/"${TLS_SERVER_KEY}" ] ; then
         print_debug "TLS: Creating Server Certificates"
         mkdir -p "${TLS_SERVER_PATH}"
         chown -f -R "${UNBOUND_USER}" "${TLS_SERVER_PATH}"
-        cat > "${TLS_SERVER_PATH}"/server.cnf <<EOF
+        cat > "${TLS_SERVER_PATH%/}"/server.cnf <<EOF
 [req]
 default_bits=3072
 default_md=sha256
@@ -30,15 +30,15 @@ authorityKeyIdentifier=keyid:always,issuer:always
 basicConstraints=critical,CA:TRUE,pathlen:0
 subjectAltName=DNS:unbound-server
 EOF
-        silent sudo -u "${UNBOUND_USER}" openssl genrsa -out "${TLS_SERVER_PATH}"/"${TLS_SERVER_KEY}" 3072
-        silent sudo -u "${UNBOUND_USER}" openssl req -new -x509 -key "${TLS_SERVER_PATH}"/"${TLS_SERVER_KEY}" -config "${TLS_SERVER_PATH}"/server.cnf -days 7200 -out "${TLS_SERVER_PATH}"/"${TLS_SERVER_CERT}"
+        silent sudo -u "${UNBOUND_USER}" openssl genrsa -out "${TLS_SERVER_PATH%/}"/"${TLS_SERVER_KEY}" 3072
+        silent sudo -u "${UNBOUND_USER}" openssl req -new -x509 -key "${TLS_SERVER_PATH%/}"/"${TLS_SERVER_KEY}" -config "${TLS_SERVER_PATH%/}"/server.cnf -days 7200 -out "${TLS_SERVER_PATH%/}"/"${TLS_SERVER_CERT}"
     fi
 
-    if [ ! -f "${TLS_CONTROL_PATH}"/"${TLS_CONTROL_CERT}" ] || [ ! -f "${TLS_CONTROL_PATH}"/"${TLS_CONTROL_KEY}" ] ; then
+    if [ ! -f "${TLS_CONTROL_PATH%/}"/"${TLS_CONTROL_CERT}" ] || [ ! -f "${TLS_CONTROL_PATH%/}"/"${TLS_CONTROL_KEY}" ] ; then
         print_debug "TLS: Creating Control Certificates"
         mkdir -p "${TLS_CONTROL_PATH}"
         chown -f -R "${UNBOUND_USER}" "${TLS_CONTROL_PATH}"
-        cat > "${TLS_CONTROL_PATH}"/client.cnf <<EOF
+        cat > "${TLS_CONTROL_PATH%/}"/client.cnf <<EOF
 [req]
 default_bits=3072
 default_md=sha256
@@ -52,13 +52,13 @@ basicConstraints=critical,CA:FALSE
 subjectAltName=DNS:unbound-control
 EOF
 
-        silent sudo -u "${UNBOUND_USER}" openssl genrsa -out "${TLS_CONTROL_PATH}"/"${TLS_CONTROL_KEY}" 3072
-        silent sudo -u "${UNBOUND_USER}" openssl x509 -addtrust serverAuth -in "${TLS_SERVER_PATH}"/"${TLS_SERVER_CERT}" -out "${TLS_SERVER_PATH}"/"${TLS_SERVER_CERT%.*}"_trust.pem
-        sudo -u "${UNBOUND_USER}" openssl req -new -config "${TLS_CONTROL_PATH}"/client.cnf -key "${TLS_CONTROL_PATH}"/"${TLS_CONTROL_KEY}" | \
-        silent sudo -u "${UNBOUND_USER}" openssl x509 -req -days 7200 -CA "${TLS_SERVER_PATH}"/"${TLS_SERVER_CERT%.*}"_trust.pem -CAkey "${TLS_SERVER_PATH}"/"${TLS_SERVER_KEY}" -CAcreateserial -sha256 -extfile  "${TLS_CONTROL_PATH}"/client.cnf -extensions v3_req -out "${TLS_CONTROL_PATH}"/"${TLS_CONTROL_CERT}"
-        chmod -f o-rw "${TLS_CONTROL_PATH}"/{"${TLS_CONTROL_CERT}","${TLS_CONTROL_KEY}"}
-        chmod -f o-rw "${TLS_SERVER_PATH}"/{"${TLS_SERVER_CERT}","${TLS_SERVER_KEY}"}
-        rm -rf "${TLS_SERVER_PATH}"/server.cnf "${TLS_CONTROL_PATH}"/client.cnf "${TLS_SERVER_PATH}"/*_trust.pem "${TLS_CONTROL_PATH}"/*_trust.pem "${TLS_SERVER_PATH}"/*.srl
+        silent sudo -u "${UNBOUND_USER}" openssl genrsa -out "${TLS_CONTROL_PATH%/}"/"${TLS_CONTROL_KEY}" 3072
+        silent sudo -u "${UNBOUND_USER}" openssl x509 -addtrust serverAuth -in "${TLS_SERVER_PATH%/}"/"${TLS_SERVER_CERT}" -out "${TLS_SERVER_PATH%/}"/"${TLS_SERVER_CERT%.*}"_trust.pem
+        sudo -u "${UNBOUND_USER}" openssl req -new -config "${TLS_CONTROL_PATH%/}"/client.cnf -key "${TLS_CONTROL_PATH%/}"/"${TLS_CONTROL_KEY}" | \
+        silent sudo -u "${UNBOUND_USER}" openssl x509 -req -days 7200 -CA "${TLS_SERVER_PATH%/}"/"${TLS_SERVER_CERT%.*}"_trust.pem -CAkey "${TLS_SERVER_PATH%/}"/"${TLS_SERVER_KEY}" -CAcreateserial -sha256 -extfile  "${TLS_CONTROL_PATH%/}"/client.cnf -extensions v3_req -out "${TLS_CONTROL_PATH%/}"/"${TLS_CONTROL_CERT}"
+        chmod -f o-rw "${TLS_CONTROL_PATH%/}"/{"${TLS_CONTROL_CERT}","${TLS_CONTROL_KEY}"}
+        chmod -f o-rw "${TLS_SERVER_PATH%/}"/{"${TLS_SERVER_CERT}","${TLS_SERVER_KEY}"}
+        rm -rf "${TLS_SERVER_PATH%/}"/server.cnf "${TLS_CONTROL_PATH%/}"/client.cnf "${TLS_SERVER_PATH%/}"/*_trust.pem "${TLS_CONTROL_PATH%/}"/*_trust.pem "${TLS_SERVER_PATH%/}"/*.srl
     fi
 }
 
@@ -103,7 +103,7 @@ unbound_create_configuration() {
         truefalse_yesno STATISTICS_CUMULATIVE
         truefalse_yesno STATISTICS_EXTENDED
 
-		cat <<EOF | silent sudo -u "${UNBOUND_USER}" tee "${CONFIG_PATH}"/"${CONFIG_FILE}"
+		cat <<EOF | silent sudo -u "${UNBOUND_USER}" tee "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
 ## Custom Generated nfrastack container Unbound Configuration! Do not edit, instead set ENV Vars
 ## If you want to use your own configuration files set SETUP_TYPE=MANUAL when starting container
 ## Last Generated on $(TZ=${TIMEZONE} date +'%Y-%m-%d %H:%M:%S %Z')
@@ -170,7 +170,7 @@ EOF
             forwarded_domain_ip=FORWARD_DOMAIN_${padded_i}_IP
             forwarded_fallback=FORWARD_DOMAIN_${padded_i}_FALLBACK
             forwarded_fallback_value="${!forwarded_fallback:-no}"
-            cat <<EOF | silent sudo -u "${UNBOUND_USER}" tee -a "${CONFIG_PATH}"/"${CONFIG_FILE}"
+            cat <<EOF | silent sudo -u "${UNBOUND_USER}" tee -a "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
 forward-zone:
   name: "${!forwarded_domain_name}"
 $(IFS=','; for ip in ${!forwarded_domain_ip}; do echo "  forward-addr: ${ip}"; done)
@@ -188,7 +188,7 @@ unbound_configure_logging() {
                 create_folder \
                                 "${LOG_PATH}" \
                                 unbound:unbound 755
-                create_logrotate unbound "${LOG_PATH}"/"${LOG_FILE}" unbound unbound unbound
+                create_logrotate unbound "${LOG_PATH%/}"/"${LOG_FILE}" unbound unbound unbound
                 logfile="${LOG_PATH}/${LOG_FILE}"
             ;;
             * )
@@ -228,7 +228,7 @@ unbound_configure_monitoring() {
 # Zabbix Unbound Configuration - Automatically Generated
 # Autoregister=unbound
 
-UserParameter=unbound.get_statistics,echo \$(date) ; sudo unbound-control -c "${CONFIG_PATH}"/"${CONFIG_FILE}" stats_noreset | sort
+UserParameter=unbound.get_statistics,echo \$(date) ; sudo unbound-control -c "${CONFIG_PATH%/}"/"${CONFIG_FILE}" stats_noreset | sort
 UserParameter=unbound.version,unbound -V | head -n1 | awk '{print \$2}'
 EOF
             ;;
