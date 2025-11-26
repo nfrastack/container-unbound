@@ -17,9 +17,9 @@ LABEL \
         org.opencontainers.image.vendor="Nfrastack <https://www.nfrastack.com>" \
         org.opencontainers.image.licenses="MIT"
 
-ARG     \
-        UNBOUND_VERSION="release-1.24.1" \
-        UNBOUND_REPO_URL="https://github.com/NLnetLabs/unbound"
+ARG \
+    UNBOUND_VERSION="release-1.24.1" \
+    UNBOUND_REPO_URL="https://github.com/NLnetLabs/unbound"
 
 
 COPY CHANGELOG.md /usr/src/container/CHANGELOG.md

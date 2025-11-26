@@ -1,3 +1,9 @@
+## 3.0.3 2025-11-26 <code at nfrastack dot com>
+
+   ### Added
+      - Unbound 1.24.2
+
+
 ## 3.0.2 2025-10-22 <code at nfrastack dot com>
 
    ### Added
@@ -236,7 +242,7 @@ Add EOL for tiredofit/unbound and notify of newer nfrastack/unbound image
 ## 2.1.3 2021-01-14 <dave at tiredofit dot ca>
 
    ### Changed
-      - Alpine 3.13 Base         
+      - Alpine 3.13 Base
 
 
 ## 2.1.2 2020-09-13 <dave at tiredofit dot ca>
