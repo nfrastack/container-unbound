@@ -1,3 +1,9 @@
+## 3.0.4 2025-12-19 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix defaults loading
+
+
 ## 3.0.3 2025-11-26 <code at nfrastack dot com>
 
    ### Added
