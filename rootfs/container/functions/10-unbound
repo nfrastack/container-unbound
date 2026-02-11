@@ -15,7 +15,7 @@ unbound_configure_certificates() {
         print_debug "TLS: Creating Server Certificates"
         mkdir -p "${TLS_SERVER_PATH}"
         chown -f -R "${UNBOUND_USER}" "${TLS_SERVER_PATH}"
-        cat > "${TLS_SERVER_PATH%/}"/server.cnf <<EOF
+        cat | silent tee "${TLS_SERVER_PATH%/}"/server.cnf <<EOF
 [req]
 default_bits=3072
 default_md=sha256
@@ -38,7 +38,7 @@ EOF
         print_debug "TLS: Creating Control Certificates"
         mkdir -p "${TLS_CONTROL_PATH}"
         chown -f -R "${UNBOUND_USER}" "${TLS_CONTROL_PATH}"
-        cat > "${TLS_CONTROL_PATH%/}"/client.cnf <<EOF
+        cat <<EOF | silent tee "${TLS_CONTROL_PATH%/}"/client.cnf
 [req]
 default_bits=3072
 default_md=sha256
@@ -150,16 +150,16 @@ server:
     username: ${UNBOUND_USER}
     verbosity: ${LOG_LEVEL}
 
-    include: ${CUSTOM_CONFIG_PATH}/*.conf
+    include: ${CUSTOM_CONFIG_PATH%/}/*.conf
 
 remote-control:
     control-enable: ${ENABLE_REMOTE_CONTROL}
     control-interface: ${REMOTE_CONTROL_LISTEN_IP}
     control-port: ${REMOTE_CONTROL_LISTEN_PORT}
-    server-key-file: "${TLS_SERVER_PATH}/${TLS_SERVER_KEY}"
-    server-cert-file: "${TLS_SERVER_PATH}/${TLS_SERVER_CERT}"
-    control-key-file: "${TLS_CONTROL_PATH}/${TLS_CONTROL_KEY}"
-    control-cert-file: "${TLS_CONTROL_PATH}/${TLS_CONTROL_CERT}"
+    server-key-file: "${TLS_SERVER_PATH%/}/${TLS_SERVER_KEY}"
+    server-cert-file: "${TLS_SERVER_PATH%/}/${TLS_SERVER_CERT}"
+    control-key-file: "${TLS_CONTROL_PATH%/}/${TLS_CONTROL_KEY}"
+    control-cert-file: "${TLS_CONTROL_PATH%/}/${TLS_CONTROL_CERT}"
 
 EOF
 
@@ -189,10 +189,10 @@ unbound_configure_logging() {
                                 "${LOG_PATH}" \
                                 unbound:unbound 755
                 create_logrotate unbound "${LOG_PATH%/}"/"${LOG_FILE}" unbound unbound unbound
-                logfile="${LOG_PATH}/${LOG_FILE}"
+                logfile="${LOG_PATH%/}/${LOG_FILE}"
             ;;
             * )
-                logfile="${LOG_PATH}/${LOG_FILE}"
+                logfile="${LOG_PATH%/}/${LOG_FILE}"
             ;;
         esac
 
@@ -234,4 +234,11 @@ EOF
             ;;
         esac
     fi
+}
+
+unbound_run() {
+    print_start "Starting Unbound $(unbound -V | head -n1 | awk '{print $2}')"
+    exec unbound \
+                    -c "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
+                    -d ${UNBOUND_ADDITIONAL_ARGS}
 }

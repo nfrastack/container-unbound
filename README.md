@@ -10,6 +10,7 @@ This repository will build a container for [Unbound](https://www.unbound.net). A
 
 - [Nfrastack](https://www.nfrastack.com)
 
+
 ## Table of Contents
 
 - [About](#about)
@@ -19,16 +20,14 @@ This repository will build a container for [Unbound](https://www.unbound.net). A
   - [Prebuilt Images](#prebuilt-images)
   - [Quick Start](#quick-start)
   - [Persistent Storage](#persistent-storage)
-- [Configuration](#configuration)
-  - [Environment Variables](#environment-variables)
-    - [Base Images used](#base-images-used)
-    - [Core Configuration](#core-configuration)
-    - [Virus Definitions Configuration](#virus-definitions-configuration)
-    - [Virus Scanning Settings](#virus-scanning-settings)
-    - [Scanning Limits](#scanning-limits)
-    - [Alerting Settings](#alerting-settings)
-  - [Users and Groups](#users-and-groups)
-  - [Networking](#networking)
+- [Environment Variables](#environment-variables)
+  - [Base Images used](#base-images-used)
+  - [Core Configuration](#core-configuration)
+  - [Unbound Configuration](#unbound-configuration)
+  - [Forwarding Domain Configuration](#forwarding-domain-configuration)
+  - [Remote Control Configuration](#remote-control-configuration)
+- [Users and Groups](#users-and-groups)
+- [Networking](#networking)
 - [Maintenance](#maintenance)
   - [Shell Access](#shell-access)
 - [Support & Maintenance](#support--maintenance)
@@ -173,11 +172,11 @@ Below is the complete list of available options that can be used to customize yo
 #### Forwarding Domain Configuration
 
 | Parameter                    | Description                                  | Default | Advanced |
-| ---------------------------- | -------------------------------------------- | ------- | -----    |
-| `FORWARD_DOMAIN_XX_NAME`     | Domain name to forward eg `example.com`      |         | |
-| `FORWARD_DOMAIN_XX_IP`       | IP address to forward queries to for _NAME   |         | |
-|                              | Add multiple by seperating with commas       |         | |
-| `FORWARD_DOMAIN_XX_FALLBACK` | Try Root Servers first then try values above | `no`    | |
+| ---------------------------- | -------------------------------------------- | ------- | -------- |
+| `FORWARD_DOMAIN_XX_NAME`     | Domain name to forward eg `example.com`      |         |          |
+| `FORWARD_DOMAIN_XX_IP`       | IP address to forward queries to for _NAME   |         |          |
+|                              | Add multiple by seperating with commas       |         |          |
+| `FORWARD_DOMAIN_XX_FALLBACK` | Try Root Servers first then try values above | `no`    |          |
 
 >> Exchange XX for 01,02,03 ....
 

@@ -18,7 +18,7 @@ LABEL \
         org.opencontainers.image.licenses="MIT"
 
 ARG \
-    UNBOUND_VERSION="release-1.24.1" \
+    UNBOUND_VERSION="release-1.24.2" \
     UNBOUND_REPO_URL="https://github.com/NLnetLabs/unbound"
 
 
@@ -45,7 +45,6 @@ RUN echo "" && \
                                 nghttp2-dev \
                                 openssl-dev \
                                 protobuf-c-dev \
-                                python3-dev \
                                 swig \
                                " \
                                && \
@@ -77,35 +76,35 @@ RUN echo "" && \
     clone_git_repo "${UNBOUND_REPO_URL}" "${UNBOUND_VERSION}" && \
     export CFLAGS="$CFLAGS -flto=auto" && \
     export LDFLAGS="-lssl -lcrypto" && \
-    PYTHON_VERSION=3 ./configure \
-                        --build="$CBUILD" \
-                        --host="$CHOST" \
-                        --prefix=/usr \
-                        --sysconfdir=/etc \
-                        --mandir=/usr/share/man \
-                        --localstatedir=/var \
-                        --with-username=unbound \
-                        --with-run-dir="" \
-                        --with-pidfile="" \
-                        --with-rootkey-file=/usr/share/dnssec-root/trusted-key.key \
-                        --with-libevent \
-                        --with-pthreads \
-		                --enable-relro-now \
-                        --disable-dsa \
-                        --disable-gost \
-                        --disable-rpath \
-                        --disable-static \
-                        --enable-cachedb \
-                        --enable-dnscrypt \
-                        --enable-dnstap \
-                        --enable-ipset \
-                        --enable-pie \
-                        --with-dynlibmodule \
-                        --with-libhiredis \
-                        --with-libnghttps2 \
-                        --with-pyunbound \
-                        --with-ssl \
-                        && \
+    ./configure \
+                --build="$CBUILD" \
+                --host="$CHOST" \
+                --prefix=/usr \
+                --sysconfdir=/etc \
+                --mandir=/usr/share/man \
+                --localstatedir=/var \
+                --with-username=unbound \
+                --with-run-dir="" \
+                --with-pidfile="" \
+                --with-rootkey-file=/usr/share/dnssec-root/trusted-key.key \
+                --with-libevent \
+                --with-pthreads \
+                --enable-relro-now \
+                --disable-dsa \
+                --disable-gost \
+                --disable-rpath \
+                --disable-static \
+                --enable-cachedb \
+                --enable-dnscrypt \
+                --enable-dnstap \
+                --enable-ipset \
+                --enable-pie \
+                --with-dynlibmodule \
+                --with-libhiredis \
+                --with-libnghttps2 \
+                --with-libprotobuf-c \
+                --with-ssl \
+                && \
     \
     sed -i -e '/^LIBS=/s/-lpython.*[[:space:]]/ /' Makefile && \
     make -j$(nproc)&& \

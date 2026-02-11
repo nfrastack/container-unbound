@@ -1,3 +1,13 @@
+## 3.0.5 2026-02-11 <code at nfastack dot com>
+
+   ### Added
+      - Unbound 1.24.2
+
+   ### Changed
+      - Add dnstap support with protobuf
+      - Remove python binding
+
+
 ## 3.0.4 2025-12-19 <dave at tiredofit dot ca>
 
    ### Changed
