@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+# SPDX-FileCopyrightText: © 2026 Nfrastack <code@nfrastack.com>
 #
 # SPDX-License-Identifier: MIT
 
@@ -18,7 +18,7 @@ LABEL \
         org.opencontainers.image.licenses="MIT"
 
 ARG \
-    UNBOUND_VERSION="release-1.24.2" \
+    UNBOUND_VERSION="release-1.25.0" \
     UNBOUND_REPO_URL="https://github.com/NLnetLabs/unbound"
 
 
