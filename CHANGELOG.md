@@ -1,3 +1,9 @@
+## 3.0.7 2026-05-22 <code at nfrastack dot com>
+
+   ### Added
+      - Unbound 1.25.1
+
+
 ## 3.0.6 2026-04-29 <code at nfrastack dot com>
 
    ### Added
