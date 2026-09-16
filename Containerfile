@@ -18,7 +18,7 @@ LABEL \
         org.opencontainers.image.licenses="MIT"
 
 ARG \
-    UNBOUND_VERSION="release-1.26.0" \
+    UNBOUND_VERSION="release-1.26.1" \
     UNBOUND_REPO_URL="https://github.com/NLnetLabs/unbound"
 
 
